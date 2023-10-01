@@ -1,0 +1,61 @@
+CREATE DATABASE umkm;
+
+-- Dataset UMKM_JABAR
+
+SELECT * FROM umkm_jabar;
+
+-- 1. Tunjukkan data umkm di kota bandung!
+
+SELECT * FROM umkm_jabar
+WHERE nama_kabupaten_kota = "KOTA BANDUNG";
+
+-- 2. Tunjukkan data umkm tahun 2019 dan disusun berdasarkan kategori_usaha!
+
+SELECT * FROM umkm_jabar
+WHERE tahun >= 2019
+ORDER BY kategori_usaha, tahun;
+
+-- 3. Soal no. 3 namun dibatasi rownya s.d. 10
+
+SELECT * FROM umkm_jabar
+WHERE tahun >= 2019
+ORDER BY kategori_usaha, tahun
+LIMIT 10;
+
+-- 4. kategori_usaha apa saja yang tersedia di dataset?
+
+SELECT DISTINCT kategori_usaha, 
+
+-- 5. Tunjukkan seluruh data hanya kategori_usaha FASHION dan MAKANAN
+
+SELECT * FROM umkm_jabar
+WHERE kategori_usaha IN ("FASHION", "MAKANAN");
+SELECT * FROM umkm_jabar
+WHERE kategori_usaha = "FASHION" OR kategori_usaha = "MAKANAN";
+
+-- 6. Tunjukkan seluruh data dengan kategori_usaha FASHION di kabupaten karawang!
+
+SELECT * FROM umkm_jabar
+WHERE kategori_usaha = "FASHION" AND nama_kabupaten_kota = "KABUPATEN KARAWANG"
+ORDER BY tahun;
+
+-- 7. Tunjukkan seluruh data selain kategori usaha kuliner, makanan dan minuman!
+
+SELECT * FROM umkm_jabar 
+WHERE kategori_usaha NOT IN("KULINER", "MAKANAN", "MINUMAN");
+
+-- 8. Dari tahun 2018 s.d. 2020, bagaimana tren jumlah umkm di kabupaten tasikmalaya untuk kategori usaha Batik?
+
+SELECT nama_kabupaten_kota, kategori_usaha, jumlah_umkm, satuan, tahun FROM umkm_jabar
+WHERE tahun <= 2020 AND tahun >= 2018 AND nama_kabupaten_kota = "KAbUPATEN TASIKMAlAYA" AND kategori_usaha = "BATIK";
+
+-- 9. Di antara kota Bandung, Kabupaten Bandung dan Kabupaten Bandung Barat, dimanakah umkm kuliner terpusat pada tahun 2021?
+
+SELECT * FROM umkm_jabar 
+WHERE nama_kabupaten_kota LIKE "%BANDUNG%" AND kategori_usaha = "KULINER" AND tahun = 2021
+ORDER BY jumlah_umkm DESC
+
+-- 10. Kabupaten/kota mana saja yang memiliki angka 7 pada digit ke 3 kode tersebut?
+
+SELECT DISTINCT kode_kabupaten_kota, nama_kabupaten_kota FROM umkm_jabar
+WHERE kode_kabupaten_kota LIKE "__7%"
